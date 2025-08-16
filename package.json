@@ -1,0 +1,33 @@
+{
+  "name": "course-pw-fatec-20252-project",
+  "version": "1.0.0",
+  "description": "Projeto da Disciplina de 'Programação Web' do curso de ADS da Fatec de Ribeirão Preto - SP",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edcaraujo/course-pw-fatec-20252-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edcaraujo/course-pw-fatec-20252-project/issues"
+  },
+  "homepage": "https://github.com/edcaraujo/course-pw-fatec-20252-project#readme",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.3",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
