@@ -1,11 +1,10 @@
 import express, { Request, Response } from "express"
+import router from "./routes/patient.route";
 
 const app = express();
 app.use(express.json());
 
-app.get("/v1/patient",(req: Request, res: Response) => {
-    res.send("This is a sample patient route!");
-});
+app.use("/v1/patient",router);
 
 app.get("/",(req: Request, res: Response) => {
     res.send("This is the root route!");
