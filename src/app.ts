@@ -1,8 +1,10 @@
 import express, { Request, Response } from "express"
 import router from "./routes/patient.route";
+import logger from "./middlewares/logger.middleware";
 
 const app = express();
 app.use(express.json());
+app.use(logger.consoleLoggerMiddleware);
 
 app.use("/v1/patient",router);
 
