@@ -2,9 +2,12 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 import dotenv from "dotenv"
+import { AppDataSource } from "../datasource";
+import { compare } from "bcrypt";
+import User from "../models/user.model";
 dotenv.config();
 
-function basicAuthMiddleware(req: Request, res: Response, next: NextFunction) {
+async function basicAuthMiddleware(req: Request, res: Response, next: NextFunction) {
    const authHeader = req.headers.authorization;
 
    if (!authHeader) {
@@ -23,7 +26,17 @@ function basicAuthMiddleware(req: Request, res: Response, next: NextFunction) {
    
    const [authUser,authPass] = authCredential.split(':');
 
-   if (authUser !== process.env.BASIC_AUTH_USER || authPass !== process.env.BASIC_AUTH_PASS) {
+   const repository = AppDataSource.getRepository(User);
+   const user = await repository.findOneBy({"username": String(authUser)});
+
+   if (user == null) {
+    res.status(401).json({error: "Usuário/senha inválida."});
+    return;
+   } 
+
+   const isValid = compare(String(authPass),user.password);
+
+   if (!isValid) {
     res.status(401).json({error: "Usuário/senha inválida."});
     return;
    } 

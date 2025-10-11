@@ -1,15 +1,25 @@
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import { hash } from 'bcrypt';
+
+@Entity()
 class User {
+    @PrimaryGeneratedColumn()
     id: number;
+
+    @Column()
     username: string;
+    
+    @Column()
     password: string;
 
-    private static counter = 1;
-
     constructor(username: string, password: string) {
-        this.id = User.counter++;
         this.username = username;
         this.password = password;
-    
+    }
+
+    @BeforeInsert()
+    async hashPassword() {
+        this.password = await hash(this.password,10);
     }
 }
 

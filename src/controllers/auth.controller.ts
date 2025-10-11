@@ -2,9 +2,12 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken"
 import userRepository from "../repositories/user.repository";
 import dotenv from "dotenv"
+import User from "../models/user.model";
+import { compare } from "bcrypt";
+import { AppDataSource } from "../datasource";
 dotenv.config();
 
-function login(req: Request, res: Response) {
+async function login(req: Request, res: Response) {
     const { username, password } = req.body;
 
     if (!username || !password) {
@@ -12,14 +15,17 @@ function login(req: Request, res: Response) {
         return;
     }
 
-    const user = userRepository.getUserByUsername(username);
+    const repository = AppDataSource.getRepository(User);
+    const user = await repository.findOneBy({"username": username});
 
-    if (!user) {
+    if (user == null) {
         res.status(401).json({error: "Usuário inválido!"});
         return;
     }
 
-    if (password !== user.password) {
+    const isValid = await compare(password, user.password);
+
+    if (!isValid) {
         res.status(401).json({error: "Credencial inválida!"});
         return;
     }
