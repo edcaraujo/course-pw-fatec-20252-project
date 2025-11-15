@@ -90,7 +90,7 @@ describe('User With TypeORM Controller', () => {
 
             expect(mockRepository.create).toHaveBeenCalledWith(newUser);
             expect(mockRepository.save).toHaveBeenCalledWith(newUser);
-            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.status).toHaveBeenCalledWith(201);
             expect(res.json).toHaveBeenCalledWith(savedUser);
         });
     });

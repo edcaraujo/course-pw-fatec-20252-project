@@ -9,11 +9,26 @@ dotenv.config();
 
 async function login(req: Request, res: Response) {
     /* #swagger.tags = ['Auth']
+       #swagger.description = 'Endpoint to authenticate a user and receive a JWT token.'
+       #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'User credentials for login.',
+            required: true,
+            schema: { $ref: '#/definitions/LoginSchema' }
+       }
+       #swagger.responses[200] = {
+            description: 'Authentication successful, JWT token returned.',
+            schema: { $ref: '#/definitions/LoginResponseSuccessSchema' }
+       }
+       #swagger.responses[401] = {
+            description: 'Authentication failed. Invalid credentials or missing fields.',
+            schema: { $ref: '#/definitions/LoginResponseUnauthorizedSchema' }
+       }
     */
     const { username, password } = req.body;
 
     if (!username || !password) {
-        res.status(401).json({error: "Usuário e/ou senha não informados."})
+        res.status(401).json({error: "Usuário e/ou senha inválidos ou não informados1."})
         return;
     }
 
@@ -21,14 +36,14 @@ async function login(req: Request, res: Response) {
     const user = await repository.findOneBy({"username": username});
 
     if (user == null) {
-        res.status(401).json({error: "Usuário inválido!"});
+        res.status(401).json({error: "Usuário e/ou senha inválidos ou não informados2."})
         return;
     }
 
     const isValid = await compare(password, user.password);
 
     if (!isValid) {
-        res.status(401).json({error: "Credencial inválida!"});
+        res.status(401).json({error: "Usuário e/ou senha inválidos ou não informados3."})
         return;
     }
 
