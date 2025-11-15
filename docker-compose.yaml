@@ -1,37 +1,39 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:17
     container_name: fatec-postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: papinha123
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: fatecare
     ports:
       - "5432:5432"
     networks:
       - fatec-network
   app:
-    container_name: fatec-api-container
+    image: fatecare-api
+    container_name: fatecare-api
     build: .
     ports:
       - "3000:3000"
-    depends_on:
-      - db 
+    depends_on: 
+      - db
     environment:
       PORT: 3000
-      BASIC_AUTH_USER: admin
+      BASIC_AUTH_USER: fatec
       BASIC_AUTH_PASS: f@tec
-      API_KEY: agoravai123
-      JWT_SECRET: jafoi15
-      DATABASE_HOST: localhost
+      API_KEY: 69e916b31e1559e32ee8f31b6275620c
+      JWT_SECRET: c0135ea1abd57dac00093c9403d06b84
+      DATABASE_TYPE: postgres
+      DATABASE_HOST: db
       DATABASE_PORT: 5432
       DATABASE_USER: postgres
-      DATABASE_PASS: papinha123
-      DATABASE_NAME: cascata
+      DATABASE_PASS: 12345
+      DATABASE_NAME: fatecare
     networks:
       - fatec-network
 
 networks:
   fatec-network:
+    name: fatec-network
     driver: bridge
