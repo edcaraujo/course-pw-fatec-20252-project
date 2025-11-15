@@ -1,11 +1,11 @@
 import express from "express"
-import userController from "../controllers/user.controller"
 import userWithTypeormController from "../controllers/userWithTypeorm.controller";
+import auth from "../middlewares/auth.middleware"
 
 const route = express.Router()
 
-route.get("/:username",userWithTypeormController.getUserByUsername);
-route.get("/",userWithTypeormController.getUsers);
+route.get("/:username",auth.jwtAuthMiddleware,userWithTypeormController.getUserByUsername);
+route.get("/",auth.jwtAuthMiddleware,userWithTypeormController.getUsers);
 route.post("/",userWithTypeormController.createUser);
 
 export default route;

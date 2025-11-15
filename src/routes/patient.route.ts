@@ -6,10 +6,10 @@ import patientWithTypeormController from "../controllers/patientWithTypeorm.cont
 
 const router = express.Router();
 
-router.get("/:id", patientWithTypeormController.getPatient);
-router.get("/", patientWithTypeormController.getPatients);
-router.post("/", patientWithTypeormController.createPatient);
-router.put("/:id", patientWithTypeormController.updatePatient);
-router.delete("/:id", patientWithTypeormController.deletePatient);
+router.get("/:id",auth.jwtAuthMiddleware,patientWithTypeormController.getPatient);
+router.get("/",auth.jwtAuthMiddleware,patientWithTypeormController.getPatients);
+router.post("/",auth.jwtAuthMiddleware,patientWithTypeormController.createPatient);
+router.put("/:id",auth.jwtAuthMiddleware,patientWithTypeormController.updatePatient);
+router.delete("/:id",auth.jwtAuthMiddleware,patientWithTypeormController.deletePatient);
 
 export default router;

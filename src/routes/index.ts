@@ -6,8 +6,8 @@ import patientRoute from "./patient.route"
 const route = express.Router();
 
 route.use("/auth",authRoute);
-route.use("/patient",patientRoute);
-route.use("/user",userRoute);
+route.use("/patients",patientRoute);
+route.use("/users",userRoute);
 
 
 
