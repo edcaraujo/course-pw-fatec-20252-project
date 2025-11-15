@@ -1,22 +1,32 @@
 import express, { Request, Response } from "express"
-import router from "./routes/index";
 import logger from "./middlewares/logger.middleware";
-import swaggerUi from "swagger-ui-express"
-import swaggerDoc from "./docs/swagger.json"
+import swagger from "swagger-ui-express"
+import swaggerConfig from "./docs/swagger.json";
+import routers from "./routes/index";
 
 const app = express();
 app.use(express.json());
+
 app.use(logger.consoleLoggerMiddleware);
 
-app.use("/v1",router);
-app.use("/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+app.get("/status", (req: Request, res: Response) => {
+    res.status(200).json({
+        status: "OK",
+        message: "API is running and ready to use!",
+        timestamp: new Date().toISOString(),
+    });
+});
+
+app.use("/api/v1",routers);
+app.use("/docs", swagger.serve, swagger.setup(swaggerConfig));
+
 
 app.get("/",(req: Request, res: Response) => {
-    res.send("This is the root route!");
+    res.status(200).json({ message: "Welcome to Fatecare API!" });
 });
 
 app.use((req: Request, res: Response) => {
-    res.send("API is running...nothing here!");
+    res.status(404).json({ error: "Not Found", message: `Route '${req.path}' not found.` });
 });
 
 export default app;

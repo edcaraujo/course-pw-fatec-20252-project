@@ -1,5 +1,5 @@
 {
-  "name": "course-pw-fatec-20252-project",
+  "name": "fatecare-api",
   "version": "1.0.0",
   "description": "Projeto da Disciplina de 'Programação Web' do curso de ADS da Fatec de Ribeirão Preto - SP",
   "main": "index.js",
