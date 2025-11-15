@@ -7,6 +7,8 @@ import { AppDataSource } from "../datasource";
 const repository = AppDataSource.getRepository(User);
 
 async function getUserByUsername(req: Request, res: Response) {
+    /* #swagger.tags = ['User']
+    */
     const username = String(req.params.username);
     const user = await repository.findOneBy({"username": username});
 
@@ -19,12 +21,16 @@ async function getUserByUsername(req: Request, res: Response) {
 }
 
 async function getUsers(req: Request, res: Response) {
+    /* #swagger.tags = ['User']
+    */
     const users = await repository.find();
 
     res.status(200).json(users);
 }
 
 async function createUser(req: Request, res: Response) {
+    /* #swagger.tags = ['User']
+    */
     const data = req.body;
     const user = repository.create(data);
     const savedUser = await repository.save(user);

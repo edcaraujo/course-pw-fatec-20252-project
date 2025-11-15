@@ -3,6 +3,8 @@ import Patient from "../models/patient.model";
 import patientRepository from "../repositories/patient.repository";
 
 function getPatient(req: Request, res: Response) {
+    /* #swagger.tags = ['Patient']
+    */
     const id = Number(req.params.id);
     const patient = patientRepository.getPatient(id);
 
@@ -15,12 +17,16 @@ function getPatient(req: Request, res: Response) {
 }
 
 function getPatients(req: Request, res: Response) {
+    /* #swagger.tags = ['Patient']
+    */
     const patients = patientRepository.getPatients();
 
     res.status(200).json(patients);
 }
 
 function createPatient(req: Request, res: Response) {
+    /* #swagger.tags = ['Patient']
+    */
     const data = req.body as Patient;
     const patient = patientRepository.createPatientWithObject(data);
 
@@ -28,6 +34,8 @@ function createPatient(req: Request, res: Response) {
 }
 
 function updatePatient(req: Request, res: Response) {
+    /* #swagger.tags = ['Patient']
+    */
     const id = Number(req.params.id)
     const data = req.body as Patient;
     data.id = id;
@@ -43,6 +51,8 @@ function updatePatient(req: Request, res: Response) {
 }
 
 function deletePatient(req: Request, res: Response) {
+    /* #swagger.tags = ['Patient']
+    */
     const id = Number(req.params.id);
     const patient = patientRepository.deletePatient(id);
 

@@ -1,16 +1,15 @@
 import express, { Request, Response } from "express"
-import router from "./routes/patient.route";
-import userRouter from "./routes/user.route";
-import authRouter from "./routes/auth.route";
+import router from "./routes/index";
 import logger from "./middlewares/logger.middleware";
+import swaggerUi from "swagger-ui-express"
+import swaggerDoc from "./docs/swagger.json"
 
 const app = express();
 app.use(express.json());
 app.use(logger.consoleLoggerMiddleware);
 
-app.use("/v1/patient",router);
-app.use("/v1/users", userRouter);
-app.use("/v1/auth", authRouter);
+app.use("/v1",router);
+app.use("/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 app.get("/",(req: Request, res: Response) => {
     res.send("This is the root route!");

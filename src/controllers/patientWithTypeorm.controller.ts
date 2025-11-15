@@ -5,6 +5,8 @@ import { AppDataSource } from "../datasource";
 const repository = AppDataSource.getRepository(Patient);
 
 async function getPatient(req: Request, res: Response) {
+    /* #swagger.tags = ['Patient']
+    */
     const id = Number(req.params.id);
     const patient = await repository.findOneBy({"id": id});
 
@@ -17,12 +19,27 @@ async function getPatient(req: Request, res: Response) {
 }
 
 async function getPatients(req: Request, res: Response) {
+    /* #swagger.tags = ['Patient']
+    */
     const patients = await repository.find();
 
     res.status(200).json(patients);
 }
 
 async function createPatient(req: Request, res: Response) {
+    /* #swagger.tags = ['Patient']
+       #swagger.parameters['body'] = {
+         in: 'body',
+         description: 'Patient infos',
+         required: true,
+         schema: { $ref: '#/definitions/PatientData' }
+       }
+       #swagger.responses[201] = {
+         description: 'Patient creation response',
+         schema: { $ref: '#/definitions/PatientDataResponse' }
+       }
+       #swagger.security = [{"apiKey": []}]
+    */
     const patient = req.body as Patient;
     const savedPatient = await repository.save(patient);
 
@@ -30,6 +47,8 @@ async function createPatient(req: Request, res: Response) {
 }
 
 async function updatePatient(req: Request, res: Response) {
+    /* #swagger.tags = ['Patient']
+    */
     const id = Number(req.params.id)
     const patient = req.body as Patient;
     
@@ -56,6 +75,8 @@ async function updatePatient(req: Request, res: Response) {
 }
 
 async function deletePatient(req: Request, res: Response) {
+    /* #swagger.tags = ['Patient']
+    */
     const id = Number(req.params.id);
     const result = await repository.delete({"id":id})
 

@@ -8,6 +8,8 @@ import { AppDataSource } from "../datasource";
 dotenv.config();
 
 async function login(req: Request, res: Response) {
+    /* #swagger.tags = ['Auth']
+    */
     const { username, password } = req.body;
 
     if (!username || !password) {
